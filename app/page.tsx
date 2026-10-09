@@ -147,38 +147,44 @@ export default function HomePage() {
           <ScrollFadeIn delay={100}>
             <p className="mt-4 max-w-xl text-lg text-steel">Detecta los problemas pequeños antes de que se vuelvan caros. Cancela cuando quieras.</p>
           </ScrollFadeIn>
+          
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-3">
-            {plans.map((p,i) => (
-              
-                <div
-                 key={p.name}                  
-                  className={`flex flex-col rounded-2xl p-8 ${p.featured ? "bg-ink text-white md:-my-4 md:py-12" : "bg-white"}`}
+          {plans.map((p, idx) => (
+            <ScrollFadeIn
+              key={p.name}
+              delay={idx * 120}
+              className={`h-full ${p.featured ? "md:-my-4" : ""}`}
+            >
+              <div
+                className={`flex h-full flex-col rounded-2xl p-8 ${
+                  p.featured ? "bg-ink text-white md:py-12" : "bg-white"
+                }`}
+              >
+                <h3 className="text-xl font-semibold">{p.name}</h3>
+                <p className="mt-3">
+                  <span className="font-display text-5xl font-bold">${p.price}</span>
+                  <span className={p.featured ? "text-white/70" : "text-steel"}> {site.currency} / mes</span>
+                </p>
+                <ul className={`mt-6 flex-1 space-y-3 ${p.featured ? "text-white/90" : "text-steel"}`}>
+                  {p.items.map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <svg width="20" height="20" viewBox="0 0 20 20" className="mt-0.5 shrink-0" aria-hidden="true">
+                        <path d="M4 10.5l4 4 8-9" fill="none" stroke={p.featured ? "#E07B3C" : "#B8551F"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={`/quote?service=care-plan&plan=${encodeURIComponent(p.name)}`}
+                  className={`btn mt-8 ${p.featured ? "btn-primary" : "btn-dark"}`}
                 >
-                  <h3 className="text-xl font-semibold">{p.name}</h3>
-                  <p className="mt-3">
-                    <span className="font-display text-5xl font-bold">${p.price}</span>
-                    <span className={p.featured ? "text-white/70" : "text-steel"}> {site.currency} / mes</span>
-                  </p>
-                  <ul className={`mt-6 flex-1 space-y-3 ${p.featured ? "text-white/90" : "text-steel"}`}>
-                    {p.items.map((i) => (
-                      <li key={i} className="flex gap-3">
-                        <svg width="20" height="20" viewBox="0 0 20 20" className="mt-0.5 shrink-0" aria-hidden="true">
-                          <path d="M4 10.5l4 4 8-9" fill="none" stroke={p.featured ? "#E07B3C" : "#B8551F"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        {i}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={`/quote?service=care-plan&plan=${encodeURIComponent(p.name)}`}
-                    className={`btn mt-8 ${p.featured ? "btn-primary" : "btn-dark"}`}
-                  >
-                    Elegir {p.name}
-                  </Link>
-                </div>
-             
-            ))}
-          </div>
+                  Elegir {p.name}
+                </Link>
+              </div>
+            </ScrollFadeIn>
+          ))}
+        </div>
         </div>
       </section>
 
@@ -188,18 +194,29 @@ export default function HomePage() {
           <ScrollFadeIn>
             <h2 className="max-w-xl text-3xl font-bold sm:text-4xl">Trabajos recientes</h2>
           </ScrollFadeIn>
+         
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {projects.map((p, i) => (
-              
-                <figure key={p.title} className={i % 3 === 0 ? "sm:col-span-2" : ""}>
-                  <Placeholder label={`Foto: ${p.title}`} className={i % 3 === 0 ? "aspect-[21/9] w-full" : "aspect-[4/3] w-full"} />
-                  <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-2">
-                    <span className="text-lg font-semibold">{p.title}</span>
-                    <span className="text-sm text-steel">{p.tag}</span>
-                  </figcaption>
-                </figure>
-             
-            ))}
+            {projects.map((p, i) => {
+              const isWide = i % 3 === 0;
+              return (
+                <ScrollFadeIn
+                  key={p.title}
+                  delay={isWide ? 0 : ((i % 3) - 1) * 120}
+                  className={isWide ? "sm:col-span-2" : ""}
+                >
+                  <figure>
+                    <Placeholder
+                      label={`Foto: ${p.title}`}
+                      className={isWide ? "aspect-[21/9] w-full" : "aspect-[4/3] w-full"}
+                    />
+                    <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-2">
+                      <span className="text-lg font-semibold">{p.title}</span>
+                      <span className="text-sm text-steel">{p.tag}</span>
+                    </figcaption>
+                  </figure>
+                </ScrollFadeIn>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -253,8 +270,8 @@ export default function HomePage() {
 
           <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-5 lg:grid-rows-2">
             {/* Featured */}
-           
-              <figure className="relative flex flex-col justify-between overflow-hidden rounded-3xl bg-copper p-8 sm:p-12 lg:col-span-3 lg:row-span-2">
+            <ScrollFadeIn className="h-full lg:col-span-3 lg:row-span-2">
+              <figure className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl bg-copper p-8 sm:p-12">
                 <span aria-hidden="true" className="pointer-events-none absolute -right-2 -top-10 select-none font-display text-[16rem] font-bold leading-none text-white/15">
                   &rdquo;
                 </span>
@@ -275,25 +292,27 @@ export default function HomePage() {
                   <span className="rounded-full bg-ink/25 px-3.5 py-1.5 text-sm sm:ml-auto">{featured.service}</span>
                 </figcaption>
               </figure>
-           
+            </ScrollFadeIn>
 
             {/* Secondary */}
-            {others.map((t) => (
-              <figure key={t.name} className="flex flex-col justify-between rounded-3xl border border-white/15 bg-white/[0.06] p-7 lg:col-span-2">
-                <div>
-                  <Stars rating={t.rating ?? 5} />
-                  <blockquote className="mt-4 text-lg leading-relaxed text-white/90">{t.text}</blockquote>
-                </div>
-                <figcaption className="mt-6 flex items-center gap-3.5">
-                  <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-copper-bright font-display font-bold text-ink">
-                    {initials(t.name)}
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block font-semibold">{t.name}</span>
-                    <span className="block truncate text-sm text-white/65">{t.role} &middot; {t.service}</span>
-                  </span>
-                </figcaption>
-              </figure>
+            {others.map((t, idx) => (
+              <ScrollFadeIn key={t.name} delay={(idx + 1) * 120} className="h-full lg:col-span-2">
+                <figure className="flex h-full flex-col justify-between rounded-3xl border border-white/15 bg-white/[0.06] p-7">
+                  <div>
+                    <Stars rating={t.rating ?? 5} />
+                    <blockquote className="mt-4 text-lg leading-relaxed text-white/90">{t.text}</blockquote>
+                  </div>
+                  <figcaption className="mt-6 flex items-center gap-3.5">
+                    <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-copper-bright font-display font-bold text-ink">
+                      {initials(t.name)}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-semibold">{t.name}</span>
+                      <span className="block truncate text-sm text-white/65">{t.role} &middot; {t.service}</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </ScrollFadeIn>
             ))}
           </div>
         </div>
