@@ -13,7 +13,7 @@ export default function QuotePage({ searchParams }: { searchParams: { service?: 
           <ScrollFadeIn>
             <h1 className="text-4xl font-bold sm:text-5xl">Pide tu cotización gratis</h1>
           </ScrollFadeIn>
-          <ScrollFadeIn>
+          <ScrollFadeIn delay={100}>
             <p className="mt-4 max-w-xl text-lg text-white/80">
               Dos pasos rápidos. Cuéntanos sobre el trabajo y luego cómo contactarte. Sin compromiso.
             </p>
@@ -23,7 +23,7 @@ export default function QuotePage({ searchParams }: { searchParams: { service?: 
 
       <section className="section">
         <div className="wrap grid gap-14 lg:grid-cols-[1.4fr_0.6fr]">
-          <ScrollFadeIn>
+          <ScrollFadeIn delay={200}>
             <QuoteForm defaultService={searchParams.service} defaultPlan={searchParams.plan} />
           </ScrollFadeIn>
           <aside className="h-fit rounded-2xl bg-mist p-7 lg:sticky lg:top-28">
