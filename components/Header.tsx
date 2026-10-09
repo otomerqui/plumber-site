@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
 
+
 const links = [
   { href: "/", label: "Inicio" },
   { href: "/#services", label: "Servicios" },
